@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 //La classe étend BroadcastReceiver on va y définier le traitement à la reception d'un sms
@@ -41,10 +42,15 @@ public class MyReceiver extends BroadcastReceiver {
                     String numero=message.getDisplayOriginatingAddress();
                     Toast.makeText(context,numero + " " + body,Toast.LENGTH_LONG).show();
                     //Toast.makeText(context,body,Toast.LENGTH_LONG).show();
-
                 }
-            
+
             }
+        }
+        String state=intent.getStringExtra((TelephonyManager.EXTRA_STATE));
+
+        if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)){
+            String numero =  intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+            Toast.makeText(context,numero,Toast.LENGTH_LONG).show();
         }
     }
 }
